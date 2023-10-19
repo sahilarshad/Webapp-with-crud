@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+
+        <title></title>
+    </head>
+    <body>
+
+        <div class="sidenav">
+            <div class="tabs">
+                <a href="/assets" class="hover">Assets</a>
+                <a href="/users" class="hover">Users</a>
+                <a href="/user_devices" class="hover">User Devices</a>
+                <a href="#" class="hover">Settings</a>
+            </div>
+        </div>
+
+        <div class="navigation">
+              
+            <a class="logout_button" href="/index">
+
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg">
+          
+          <div class="logout">LOGOUT</div>
+        
+            </a>
+          
+        </div>
+
+
+        <div class="content">
+
+            <div class="tab-content">
+
+                <div class="tabs__tab active" id="tab_1" data-tab-info>
+                
+                    <% if(action == 'add') { %>
+
+                    <div class="card">
+                        <div class="card-header">user_devices</div>
+                        <div class="card-body">
+                            <div>
+                                <form method="POST" action="/user_devices/search"></form>
+                            </div>
+                            <form method="POST" action="/user_devices/add_assets">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Serial Number</label>
+                                            <input type="text" name="serial_number" id="serial_number" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Mobile Name</label>
+                                            <input type="text" name="mobile_name" id="mobile_name" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Mobile Model</label>
+                                            <input type="text" name="model" id="model" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label style="color: white;">User Name</label>
+                                            <input type="text" name="status" id="status" class="form-control" />
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="submit" name="submit_button" class="btn btn-primary" value="Add" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <% } else if(action == 'edit') { %>
+                    <div class="card">
+                        <div class="card-header">user_devices</div>
+                        <div class="card-body">
+                            <form method="POST" action="/user_devices/edit/<%= sampleData.id %> ">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Serial Number</label>
+                                            <input type="text" name="serial_number" id="serial_number" class="form-control" value="<%= sampleData.serial_number %>" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Mobile Name</label>
+                                            <input type="text" name="mobile_name" id="mobile_name" class="form-control" value="<%= sampleData.mobile_name %>" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>Mobile Model</label>
+                                            <input type="text" name="model" id="model" class="form-control" value="<%= sampleData.model %>" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label>User Name</label>
+                                            <input type="text" name="status" id="status" class="form-control" value="<%= sampleData.status %>" />
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="submit" name="submit_button" class="btn btn-primary" value="Edit" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <% } else { %>
+                        
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col">user_devices</div>
+                                <div class ='col'> 
+                                    <label>Search</label>
+                                    <input type="text" name="search" id="search" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <a href="/user_devices/add" class="btn btn-sm float-end">
+                                        <img src="https://cdn-icons-png.flaticon.com/128/3668/3668480.png">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Serial Number</th>
+                                        <th>Mobile Name</th>
+                                        <th>Mobile Model</th>
+                                        <th>User Name</th>
+                                        <th>Action</th>
+                                    </tr>
+
+
+                                    
+                                    <%
+                                    if(sampleData.length > 0)
+                                    {
+                                        sampleData.forEach(function(data){
+                                    %>
+                                    <tr>
+                                        <td><%= data.serial_number %></td>
+                                        <td><%= data.mobile_name %></td>
+                                        <td><%= data.model %></td>
+                                        <td><%= data.username %></td>
+                                        <td>
+
+                                            <a href="/user_devices/edit/<%= data.id %>" class="btn  btn-sm">
+                                                <img src="https://cdn-icons-png.flaticon.com/512/6065/6065488.png">
+                                            </a>
+
+                                            <a href="/user_devices/delete/<%= data.id %>" class="btn btn-sm">
+                                                <img src="https://cdn-icons-png.flaticon.com/128/3096/3096673.png">
+                                            </a>
+                                            
+                                        </td>
+                                    </tr>
+                                    <%
+                                        });
+                                    }
+                                    else
+                                    {
+                                    %>
+                                    <tr>
+                                        <td colspan="5">No Data Found</td>
+                                    </tr>
+                                    <%
+                                    }
+                                    %>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% } %>
+                
+                </div>
+        
+            </div>
+
+        </div> 
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
+</html>
